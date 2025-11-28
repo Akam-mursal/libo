@@ -1,8 +1,12 @@
 :root {
-    --ivory: #f9f6ef;
-    --dark-blue: #28263d;
-    --periwinkle: #b19ff9;
-    --forest-green: #1d5939;
+    /* Theme Colors */
+    --primary: #499fa4;       /* Teal */
+    --secondary: #3d4a55;     /* Charcoal */
+    --accent: #e9bc8b;        /* Tangerine */
+    --background: #f5f7fb;    /* Light background */
+    --text: #2c3e50;          /* Dark text */
+    
+    /* Additional Colors */
     --success: #4cc9f0;
     --danger: #f72585;
     --warning: #f8961e;
@@ -12,9 +16,17 @@
     --gray-light: #adb5bd;
     --border: #e9ecef;
     --card-bg: #ffffff;
-    --body-bg: #f5f7fb;
+    --body-bg: var(--background);
     --shadow: 0 4px 6px -1px rgba(40, 38, 61, 0.1), 0 2px 4px -1px rgba(40, 38, 61, 0.06);
     --shadow-lg: 0 10px 15px -3px rgba(40, 38, 61, 0.1), 0 4px 6px -2px rgba(40, 38, 61, 0.05);
+    
+    /* Add smooth transitions */
+    --transition: all 0.5s ease;
+}
+
+/* Apply transitions to themeable elements */
+body, .dashboard-header, .stat-card, .btn, .card, .signal-item, .result-item {
+    transition: var(--transition);
 }
 
 * {
@@ -25,9 +37,10 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--ivory);
-    color: var(--dark-blue);
+    background: var(--background);
+    color: var(--text);
     line-height: 1.6;
+    transition: var(--transition);
 }
 
 .dashboard {
@@ -38,10 +51,11 @@ body {
 
 /* Header */
 .dashboard-header {
-    background: linear-gradient(135deg, var(--dark-blue), #1a1a2e);
-    color: var(--ivory);
+    background: linear-gradient(135deg, var(--secondary), #1a1a2e);
+    color: var(--light);
     padding: 1rem 2rem;
     box-shadow: var(--shadow);
+    transition: var(--transition);
 }
 
 .header-content {
@@ -60,7 +74,8 @@ body {
 
 .logo i {
     font-size: 2rem;
-    color: var(--periwinkle);
+    color: var(--primary);
+    transition: var(--transition);
 }
 
 .logo h1 {
@@ -86,8 +101,9 @@ body {
 }
 
 .status-indicator.connected i {
-    color: var(--forest-green);
+    color: var(--primary);
     animation: pulse 2s infinite;
+    transition: var(--transition);
 }
 
 .status-indicator.disconnected i {
@@ -120,15 +136,14 @@ body {
 
 .stat-card {
     background: var(--card-bg);
+    border-radius: 10px;
     padding: 1.5rem;
-    border-radius: 16px;
     box-shadow: var(--shadow);
     display: flex;
     align-items: center;
     gap: 1rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--card-bg), var(--ivory));
+    border-left: 4px solid var(--primary);
+    transition: var(--transition);
 }
 
 .stat-card:hover {
@@ -217,13 +232,15 @@ body {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--dark-blue), #3a3785);
-    color: var(--ivory);
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    transition: var(--transition);
 }
 
-.btn-primary:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(40, 38, 61, 0.4);
+.btn-primary:hover {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
 }
 
 .btn-secondary {
