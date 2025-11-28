@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Signal Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>Trading Signal Dashboard</h1>
+                </div>
+                <div class="connection-status">
+                    <span id="status" class="status-indicator disconnected">
+                        <i class="fas fa-circle"></i>
+                        Disconnected
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-broadcast-tower"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalSignalsCount">0</h3>
+                        <p>Total Signals</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon win">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="winCount">0</h3>
+                        <p>Wins</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon loss">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="lossCount">0</h3>
+                        <p>Losses</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon rate">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="winRate">0%</h3>
+                        <p>Win Rate</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Control Panel -->
+            <section class="control-section">
+                <div class="control-card">
+                    <h3><i class="fas fa-cogs"></i> Control Panel</h3>
+                    <div class="controls">
+                        <button id="connectBtn" class="btn btn-primary">
+                            <i class="fas fa-play"></i> Start Monitoring
+                        </button>
+                        <button id="stopBtn" class="btn btn-secondary" disabled>
+                            <i class="fas fa-stop"></i> Stop
+                        </button>
+                        <button id="exportBtn" class="btn btn-outline">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
+                        <button id="resetBtn" class="btn btn-outline">
+                            <i class="fas fa-redo"></i> Reset Stats
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Live Data & Signals -->
+            <section class="data-section">
+                <!-- Current Market Data -->
+                <div class="market-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> Live Market Data</h3>
+                        <span class="live-badge">
+                            <i class="fas fa-circle"></i> LIVE
+                        </span>
+                    </div>
+                    <div class="market-content">
+                        <div class="tick-display">
+                            <div class="tick-price" id="currentTick">-</div>
+                            <div class="tick-info">
+                                <div class="tick-label">Current Price</div>
+                                <div class="last-digit" id="lastDigit">Last Digit: -</div>
+                            </div>
+                        </div>
+                        <div class="digit-history">
+                            <h4>Recent Digits</h4>
+                            <div id="digitHistory" class="digits-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signal Status -->
+                <div class="signal-status-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bell"></i> Signal Status</h3>
+                    </div>
+                    <div class="signal-status-content">
+                        <div id="signalStatus" class="signal-indicator idle">
+                            <i class="fas fa-pause-circle"></i>
+                            <span>No Active Signals</span>
+                        </div>
+                        <div class="signal-stats">
+                            <div class="signal-stat">
+                                <span class="stat-value" id="tickCount">0</span>
+                                <span class="stat-label">Ticks Processed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Signals and Results -->
+            <section class="results-section">
+                <!-- Recent Signals -->
+                <div class="signals-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt"></i> Recent Signals</h3>
+                        <span class="badge" id="signalsCount">0</span>
+                    </div>
+                    <div class="card-content">
+                        <div id="signalsList" class="signals-list">
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                <p>No signals generated yet</p>
+                                <small>Signals will appear here when conditions are met</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signal Results -->
+                <div class="results-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clipboard-check"></i> Signal Results</h3>
+                        <span class="badge" id="resultsCount">0</span>
+                    </div>
+                    <div class="card-content">
+                        <div id="resultsList" class="results-list">
+                            <div class="empty-state">
+                                <i class="fas fa-clipboard-list"></i>
+                                <p>No results available</p>
+                                <small>Results will appear here after signal verification</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Signal Alert Modal -->
+    <div id="signalAlert" class="signal-alert">
+        <div class="alert-content">
+            <div class="alert-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <div class="alert-text">
+                <h3>Signal Detected!</h3>
+                <p id="alertMessage">New trading signal available</p>
+            </div>
+            <button class="alert-close" onclick="closeSignalAlert()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
